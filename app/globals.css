@@ -237,14 +237,18 @@
       16px 16px 15px 0 rgba(255,255,255,0.2);
   }
 
-  /* === Dark glass card (for demo / immersive panels) === */
+  /* === Dark glass card (for demo / immersive panels) ===
+     Deliberately a lifted, warm charcoal so the panel reads clearly
+     above the near-black demo / final-CTA backgrounds. */
   .card-glass-dark {
-    background: rgba(20,18,14,0.82);
+    background: rgba(58,53,43,0.97);
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
     border-radius: 21px;
-    border: 1px solid rgba(201,162,39,0.18);
-    box-shadow: 0 0 24px 0 rgba(201,162,39,0.1) inset, 0 30px 60px rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,162,39,0.32);
+    box-shadow:
+      0 0 34px 0 rgba(201,162,39,0.14) inset,
+      0 30px 64px rgba(0,0,0,0.55);
   }
 
   /* === Section divider === */

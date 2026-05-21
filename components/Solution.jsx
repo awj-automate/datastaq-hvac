@@ -35,15 +35,13 @@ const STREAM_A_POINTS = [
   'Answers every call in under 15 seconds',
   '24/7/365, including weekends and holidays',
   'HVAC triage: system type, urgency, service category',
-  'Books directly into your dispatch software',
-  'No more voicemail, no more lost jobs',
+  'Books directly onto your calendar',
 ];
 
 const STREAM_B_POINTS = [
   'We export your existing customer list',
   'DNC scrub and segment by recency',
-  'AI calls for maintenance, tune-ups, and replacements',
-  'Average reactivation LTV: $1,500 to $3,000',
+  'Calls, emails and SMS for maintenance, tune-ups, and replacements',
 ];
 
 /* ── One pipeline lane ─────────────────────────────────────── */
