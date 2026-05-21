@@ -164,7 +164,7 @@ export default function FinalCTA() {
                   style={{ color: '#E5C463', background: 'rgba(201,162,39,0.14)' }}
                 >
                   <span className="sub-title-dot" />
-                  Last Step
+                  Book a Call
                 </div>
               </Reveal>
 
@@ -185,8 +185,8 @@ export default function FinalCTA() {
                   style={{ letterSpacing: '-0.02em', lineHeight: '1.6' }}
                 >
                   An AI receptionist answering every call and reviving your
-                  customer database. $2,500 a month, month-to-month, live in 2
-                  weeks. Miss the 20 and you get a full refund.
+                  customer database. Live in 2 weeks. Miss the 20 and you get a
+                  full refund.
                 </p>
               </Reveal>
 

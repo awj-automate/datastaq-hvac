@@ -25,7 +25,7 @@ import SectionDivider from '@/components/SectionDivider';
 import Demo from '@/components/Demo';
 import Differentiation from '@/components/Differentiation';
 import Results from '@/components/Results';
-import Pricing from '@/components/Pricing';
+import Guarantee from '@/components/Guarantee';
 import FAQ from '@/components/FAQ';
 import FinalCTA from '@/components/FinalCTA';
 import Footer from '@/components/Footer';
@@ -97,7 +97,7 @@ export default function Home() {
         <SectionDivider topColor="#14110B" fill="#F5F0E1" />
         <Differentiation />
         <Results />
-        <Pricing />
+        <Guarantee />
         <FAQ />
         <SectionDivider topColor="#FFFFFF" fill="#14110B" />
         <FinalCTA />

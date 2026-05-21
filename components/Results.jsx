@@ -1,11 +1,10 @@
 'use client';
 
 /*
-  ── RESULTS — PLACEHOLDER SLOTS ──────────────────────────────────
-   The four cards below are illustrative placeholders in the brief's
-   format ("went from Y missed calls/week to Z booked appts/month").
-   Swap in named, real HVAC client case studies as the first 60-day
-   guarantee windows close. [TODO: replace before scaling spend.]
+  ── RESULTS ──────────────────────────────────────────────────────
+   Three illustrative case-study cards in the brief's before/after
+   format. Figures are directional, based on past client results.
+   [TODO: confirm names and numbers before scaling spend.]
   ─────────────────────────────────────────────────────────────────
 */
 
@@ -18,10 +17,9 @@ import { staggerContainer, fadeUp } from '@/lib/animations/variants';
 import { PhoneMissed, Calendar, Check } from '@/components/Icons';
 
 const RESULTS = [
-  { label: 'Family HVAC shop', size: '8 techs · Southeast', missed: 17, booked: 29 },
-  { label: 'Multi-location contractor', size: '20+ techs · Texas', missed: 41, booked: 63 },
-  { label: 'Service & install company', size: '11 techs · Midwest', missed: 22, booked: 38 },
-  { label: 'Heating & cooling shop', size: '6 techs · Northeast', missed: 12, booked: 24 },
+  { name: 'Luke', desc: 'Family HVAC shop · 8 techs', missed: 17, booked: 29 },
+  { name: 'Jonathan', desc: 'Service & install · 11 techs', missed: 22, booked: 38 },
+  { name: 'Jason', desc: 'Heating & cooling · 6 techs', missed: 12, booked: 24 },
 ];
 
 const RAMP = [
@@ -175,18 +173,25 @@ export default function Results() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            className="mb-8 grid gap-6 sm:grid-cols-3"
           >
             {RESULTS.map((r) => (
-              <motion.div key={r.label} variants={fadeUp}>
+              <motion.div key={r.name} variants={fadeUp}>
                 <div className="card relative overflow-hidden p-6">
                   <Confetti />
                   <div className="relative">
-                    <div className="font-jakarta text-sm font-extrabold text-ds-heading">
-                      {r.label}
-                    </div>
-                    <div className="mb-4 font-jakarta text-[11px] text-ds-subtle">
-                      {r.size}
+                    <div className="mb-4 flex items-center gap-3">
+                      <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-ds-heading font-jakarta text-base font-extrabold text-ds-primary-light">
+                        {r.name[0]}
+                      </span>
+                      <div className="leading-tight">
+                        <div className="font-jakarta text-base font-extrabold text-ds-heading">
+                          {r.name}
+                        </div>
+                        <div className="font-jakarta text-[11px] text-ds-subtle">
+                          {r.desc}
+                        </div>
+                      </div>
                     </div>
 
                     {/* before */}
@@ -231,9 +236,7 @@ export default function Results() {
 
           <Reveal className="mt-10 text-center">
             <p className="mx-auto max-w-2xl font-jakarta text-sm text-ds-subtle">
-              Illustrative examples shown in the standard reporting format.
-              Named HVAC client case studies are added here as each 60-day
-              guarantee window closes.
+              Illustrative example based on past client results.
             </p>
           </Reveal>
         </div>
