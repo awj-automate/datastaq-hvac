@@ -1,0 +1,10 @@
+.next/
+node_modules/
+out/
+.env*
+!.env.example
+.vercel
+
+# OS / editor cruft
+desktop.ini
+.DS_Store

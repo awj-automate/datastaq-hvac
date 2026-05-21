@@ -1,0 +1,266 @@
+'use client';
+
+/*
+  ── CALENDAR EMBED ───────────────────────────────────────────────
+   The booking card below is a styled PLACEHOLDER. Drop your real
+   scheduler embed (Calendly / Cal.com / SavvyCal) into the
+   "CALENDAR EMBED SLOT" marked inside BookingCard. The placeholder
+   keeps the layout intact until then.
+  ─────────────────────────────────────────────────────────────────
+*/
+
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import SplitText from '@/components/SplitText';
+import Reveal from '@/components/Reveal';
+import MagneticButton from '@/components/MagneticButton';
+import ParticleField from '@/components/ParticleField';
+import { Calendar, Headset, Repeat, Check, ArrowRight, Phone } from '@/components/Icons';
+import { BOOK_URL, DEMO_PHONE, DEMO_PHONE_TEL } from '@/lib/constants';
+import { track } from '@/lib/tracking';
+
+/* ── Cursor-trailing particles ─────────────────────────────── */
+function useCursorTrail(enabled) {
+  const [trail, setTrail] = useState([]);
+  const idRef = useRef(0);
+  const lastRef = useRef(0);
+
+  const spawn = (x, y) => {
+    if (!enabled) return;
+    const now = performance.now();
+    if (now - lastRef.current < 38) return;
+    lastRef.current = now;
+    const id = idRef.current++;
+    setTrail((t) => [...t.slice(-16), { id, x, y }]);
+  };
+  const remove = (id) => setTrail((t) => t.filter((p) => p.id !== id));
+  return { trail, spawn, remove };
+}
+
+/* ── Booking placeholder ───────────────────────────────────── */
+function BookingCard() {
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const slots = ['9:00 AM', '11:30 AM', '2:00 PM', '4:30 PM'];
+  return (
+    <div className="card-glass-dark p-6 sm:p-7">
+      {/* CALENDAR EMBED SLOT — replace this block with your scheduler */}
+      <div className="mb-5 flex items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-ds-primary text-white">
+          <Calendar size={20} />
+        </span>
+        <div>
+          <div className="font-jakarta text-sm font-extrabold text-white">
+            Book your HVAC game-plan call
+          </div>
+          <div className="font-jakarta text-[11px] text-white/50">
+            20 minutes · with a DataStaq strategist
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-3 grid grid-cols-5 gap-2">
+        {days.map((d, i) => (
+          <div
+            key={d}
+            className={`rounded-xl border py-2.5 text-center font-jakarta text-[11px] font-bold transition-colors ${
+              i === 2
+                ? 'border-ds-primary bg-ds-primary/15 text-ds-primary-light'
+                : 'border-white/10 text-white/55'
+            }`}
+          >
+            <div>{d}</div>
+            <div className="text-base">{12 + i}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mb-5 grid grid-cols-2 gap-2">
+        {slots.map((s, i) => (
+          <div
+            key={s}
+            className={`rounded-xl border py-2.5 text-center font-jakarta text-xs font-semibold transition-colors ${
+              i === 1
+                ? 'border-ds-primary bg-ds-primary/15 text-white'
+                : 'border-white/10 text-white/55'
+            }`}
+          >
+            {s}
+          </div>
+        ))}
+      </div>
+
+      <MagneticButton
+        href={BOOK_URL}
+        className="btn-accent h-14 w-full justify-center text-base"
+        cursorText="Book it →"
+        strength={0.35}
+        onClick={() => track('Lead', { location: 'final_booking_card' })}
+      >
+        <span className="relative z-10 flex items-center gap-2">
+          Confirm my strategy call
+          <ArrowRight size={18} />
+        </span>
+      </MagneticButton>
+      <p className="mt-3 text-center font-jakarta text-[11px] text-white/40">
+        No pressure, no hard sell. We will tell you honestly if it is a fit.
+      </p>
+    </div>
+  );
+}
+
+export default function FinalCTA() {
+  const sectionRef = useRef(null);
+  const reduced = useReducedMotion();
+  const { trail, spawn, remove } = useCursorTrail(!reduced);
+
+  const handleMove = (e) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    spawn(e.clientX - rect.left, e.clientY - rect.top);
+  };
+
+  return (
+    <section
+      id="book"
+      ref={sectionRef}
+      onMouseMove={handleMove}
+      className="mesh-gradient relative overflow-hidden py-24 lg:py-32"
+    >
+      <div className="absolute inset-0 opacity-70">
+        <ParticleField density={0.9} theme="dark" />
+      </div>
+
+      <div className="grain pointer-events-none absolute inset-0 opacity-[0.06]" />
+
+      {/* cursor trail */}
+      <div className="pointer-events-none absolute inset-0 z-20">
+        <AnimatePresence>
+          {trail.map((p) => (
+            <motion.span
+              key={p.id}
+              className="absolute h-2 w-2 rounded-full"
+              style={{
+                left: p.x,
+                top: p.y,
+                background: 'radial-gradient(circle, #FBEFC4, #C9A227)',
+                boxShadow: '0 0 8px rgba(229,196,99,0.8)',
+              }}
+              initial={{ scale: 1, opacity: 0.9 }}
+              animate={{ scale: 0, opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              onAnimationComplete={() => remove(p.id)}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-content px-5 sm:px-8 lg:px-12">
+        <div className="content-wrap">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* copy */}
+            <div className="text-center lg:text-left">
+              <Reveal>
+                <div
+                  className="sub-title mb-6"
+                  style={{ color: '#E5C463', background: 'rgba(201,162,39,0.14)' }}
+                >
+                  <span className="sub-title-dot" />
+                  Last Step
+                </div>
+              </Reveal>
+
+              <h2
+                className="mb-6 font-jakarta text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl"
+                style={{ lineHeight: '1.05', letterSpacing: '-0.045em' }}
+              >
+                <SplitText text="20 HVAC appointments" mode="char" />
+                <br />
+                <SplitText text="in 60 days." mode="char" delay={0.3} />
+                <br />
+                <span className="gradient-text-flow">Or you don&apos;t pay.</span>
+              </h2>
+
+              <Reveal delay={0.1}>
+                <p
+                  className="mx-auto mb-8 max-w-lg font-jakarta text-lg text-white/70 lg:mx-0"
+                  style={{ letterSpacing: '-0.02em', lineHeight: '1.6' }}
+                >
+                  An AI receptionist answering every call and reviving your
+                  customer database. $2,500 a month, month-to-month, live in 2
+                  weeks. Miss the 20 and you get a full refund.
+                </p>
+              </Reveal>
+
+              {/* feature chips */}
+              <Reveal delay={0.15}>
+                <div className="mb-8 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+                  {[
+                    { icon: <Headset size={14} />, t: 'Answered in <15s' },
+                    { icon: <Repeat size={14} />, t: 'Database reactivation' },
+                    { icon: <Check size={14} />, t: '60-day guarantee' },
+                  ].map((c) => (
+                    <span
+                      key={c.t}
+                      className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-2 font-jakarta text-xs font-semibold text-white/80"
+                    >
+                      <span className="text-ds-primary-light">{c.icon}</span>
+                      {c.t}
+                    </span>
+                  ))}
+                </div>
+              </Reveal>
+
+              {/* massive CTA */}
+              <Reveal delay={0.2}>
+                <div className="relative inline-block">
+                  <div
+                    className="animate-pulse-glow absolute -inset-3 rounded-full"
+                    style={{
+                      background:
+                        'radial-gradient(circle, rgba(201,162,39,0.6), transparent 70%)',
+                      filter: 'blur(18px)',
+                    }}
+                  />
+                  <MagneticButton
+                    href={BOOK_URL}
+                    className="btn-accent relative h-16 px-12 text-lg"
+                    cursorText="Let's go →"
+                    strength={0.55}
+                    onClick={() => track('Lead', { location: 'final_cta' })}
+                  >
+                    <span className="relative z-10 flex items-center gap-2.5">
+                      Book a Call
+                      <ArrowRight size={20} />
+                    </span>
+                  </MagneticButton>
+                </div>
+              </Reveal>
+
+              {/* demo phone line */}
+              <Reveal delay={0.28}>
+                <a
+                  href={DEMO_PHONE_TEL}
+                  onClick={() => track('Contact', { location: 'final_phone' })}
+                  className="mt-6 inline-flex items-center gap-2.5 font-jakarta text-sm text-white/65 transition-colors hover:text-white"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-ds-primary-light">
+                    <Phone size={15} />
+                  </span>
+                  Or call{' '}
+                  <strong className="font-extrabold text-white">{DEMO_PHONE}</strong>{' '}
+                  to hear the AI right now
+                </a>
+              </Reveal>
+            </div>
+
+            {/* booking card */}
+            <Reveal variants={{ hidden: { opacity: 0, y: 50, scale: 0.94 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>
+              <BookingCard />
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
