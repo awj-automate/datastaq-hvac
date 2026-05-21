@@ -7,7 +7,6 @@ import MagneticButton from '@/components/MagneticButton';
 import { staggerContainer, fadeUp, fadeLeft, fadeRight } from '@/lib/animations/variants';
 import { Check } from '@/components/Icons';
 import { BOOK_URL } from '@/lib/constants';
-import { track } from '@/lib/tracking';
 
 const INCLUDED = [
   '24/7 inbound AI receptionist',
@@ -202,7 +201,6 @@ export default function Pricing() {
                   href={BOOK_URL}
                   className="btn-accent h-14 w-full justify-center text-base"
                   cursorText="Book it →"
-                  onClick={() => track('Lead', { location: 'pricing' })}
                 >
                   <span className="relative z-10">Book a Call</span>
                 </MagneticButton>

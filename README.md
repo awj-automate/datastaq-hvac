@@ -29,33 +29,17 @@ pnpm build   # production build
 Hero · marquee · Problem (missed calls) · two-pronged Solution · 3-step Process
 · live Demo · Differentiation · Results · Pricing & Guarantee · FAQ · final CTA.
 
-## Conversion tracking
-
-- `components/Analytics.jsx` loads **Meta Pixel** + **GA4** via `next/script`.
-  IDs come from env vars (see `.env.example`); if unset, nothing loads.
-- `lib/tracking.js` → `track(event, params)` fires to both `fbq` and `gtag`.
-- CTA clicks fire `Lead` (Book a Call) and `Contact` (Hear the Demo / call the
-  demo line).
-
-Set these in **Vercel → Project → Settings → Environment Variables**:
-
-```
-NEXT_PUBLIC_FB_PIXEL_ID = <Meta Pixel ID>
-NEXT_PUBLIC_GA4_ID      = G-XXXXXXXXXX
-```
+The Demo section is a self-contained mock — an animated two-tab call simulation
+(inbound call + database reactivation call). Nothing external to wire up.
 
 ## Before launch — swap the placeholders
 
-All external values live in **`lib/constants.js`** (search `TODO` repo-wide):
+Search the repo for `TODO`. Key items:
 
-- `DEMO_PHONE` / `DEMO_PHONE_TEL` — the live demo line a prospect can call
-- `DEMO_APP_URL` — hosted demo app (once set to an `https://` URL, the Demo
-  section renders it as a live `<iframe>` instead of a placeholder panel)
-- `DASHBOARD_URL` — "See the dashboard" link
-- `BOOK_URL` — currently the on-page `#book` section; swap for a real scheduler
-- Scheduler embed — `components/FinalCTA.jsx`, "CALENDAR EMBED SLOT"
-- `NEXT_PUBLIC_FB_PIXEL_ID` / `NEXT_PUBLIC_GA4_ID` — see above
 - `/public/og-image.png` (1200x630) — referenced in `app/layout.js`
+- Real scheduler embed — `components/FinalCTA.jsx`, "CALENDAR EMBED SLOT"
+- `BOOK_URL` in `lib/constants.js` — currently the on-page `#book` section;
+  point it at a real scheduler URL if you prefer
 - Real case studies — `components/Results.jsx` (currently illustrative slots)
 - Confirm the missed-call stats in `components/Problem.jsx`
 
@@ -69,6 +53,6 @@ All external values live in **`lib/constants.js`** (search `TODO` repo-wide):
 
 ## Performance
 
-The page is statically prerendered. Particle counts scale down on mobile,
-animation loops clean up on unmount, and the demo `<iframe>` is lazy-loaded.
-No new dependencies beyond the shared DataStaq stack.
+The page is statically prerendered. Particle counts scale down on mobile and
+animation loops clean up on unmount. No dependencies beyond the shared DataStaq
+stack.

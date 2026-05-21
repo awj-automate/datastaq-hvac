@@ -15,9 +15,8 @@ import SplitText from '@/components/SplitText';
 import Reveal from '@/components/Reveal';
 import MagneticButton from '@/components/MagneticButton';
 import ParticleField from '@/components/ParticleField';
-import { Calendar, Headset, Repeat, Check, ArrowRight, Phone } from '@/components/Icons';
-import { BOOK_URL, DEMO_PHONE, DEMO_PHONE_TEL } from '@/lib/constants';
-import { track } from '@/lib/tracking';
+import { Calendar, Headset, Repeat, Check, ArrowRight } from '@/components/Icons';
+import { BOOK_URL } from '@/lib/constants';
 
 /* ── Cursor-trailing particles ─────────────────────────────── */
 function useCursorTrail(enabled) {
@@ -94,7 +93,6 @@ function BookingCard() {
         className="btn-accent h-14 w-full justify-center text-base"
         cursorText="Book it →"
         strength={0.35}
-        onClick={() => track('Lead', { location: 'final_booking_card' })}
       >
         <span className="relative z-10 flex items-center gap-2">
           Confirm my strategy call
@@ -227,7 +225,6 @@ export default function FinalCTA() {
                     className="btn-accent relative h-16 px-12 text-lg"
                     cursorText="Let's go →"
                     strength={0.55}
-                    onClick={() => track('Lead', { location: 'final_cta' })}
                   >
                     <span className="relative z-10 flex items-center gap-2.5">
                       Book a Call
@@ -237,21 +234,6 @@ export default function FinalCTA() {
                 </div>
               </Reveal>
 
-              {/* demo phone line */}
-              <Reveal delay={0.28}>
-                <a
-                  href={DEMO_PHONE_TEL}
-                  onClick={() => track('Contact', { location: 'final_phone' })}
-                  className="mt-6 inline-flex items-center gap-2.5 font-jakarta text-sm text-white/65 transition-colors hover:text-white"
-                >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-ds-primary-light">
-                    <Phone size={15} />
-                  </span>
-                  Or call{' '}
-                  <strong className="font-extrabold text-white">{DEMO_PHONE}</strong>{' '}
-                  to hear the AI right now
-                </a>
-              </Reveal>
             </div>
 
             {/* booking card */}

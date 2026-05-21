@@ -4,17 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Reveal from '@/components/Reveal';
 import SplitText from '@/components/SplitText';
-import MagneticButton from '@/components/MagneticButton';
-import { Headset, Repeat, Check, Play, Pause, Phone, ArrowRight } from '@/components/Icons';
-import {
-  DEMO_PHONE,
-  DEMO_PHONE_TEL,
-  DEMO_APP_URL,
-  DASHBOARD_URL,
-} from '@/lib/constants';
-import { track } from '@/lib/tracking';
-
-const HAS_EMBED = /^https?:\/\//.test(DEMO_APP_URL);
+import { Headset, Repeat, Check, Play, Pause, Phone } from '@/components/Icons';
 
 /* ── Conversation scripts ──────────────────────────────────── */
 const CONVOS = {
@@ -73,7 +63,7 @@ function SoundWave({ active, color }) {
   );
 }
 
-/* ── One animated call ─────────────────────────────────────── */
+/* ── One animated mock call ────────────────────────────────── */
 function CallDemo({ convo }) {
   const { lines, accent } = convo;
   const [playing, setPlaying] = useState(true);
@@ -265,44 +255,6 @@ function Bubble({ line, accent, caret }) {
   );
 }
 
-/* ── Demo app embed ────────────────────────────────────────── */
-function EmbedBlock() {
-  return (
-    <div className="card-glass-dark overflow-hidden">
-      <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-        <span className="ml-2 font-jakarta text-[11px] font-semibold text-white/55">
-          Live demo app
-        </span>
-      </div>
-      {HAS_EMBED ? (
-        <iframe
-          src={DEMO_APP_URL}
-          title="DataStaq HVAC demo app"
-          loading="lazy"
-          className="h-[420px] w-full border-0 bg-white"
-        />
-      ) : (
-        <div className="flex h-[300px] flex-col items-center justify-center gap-3 px-6 text-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-ds-primary/15 text-ds-primary-light">
-            <Headset size={26} />
-          </span>
-          <p className="font-jakarta text-sm font-semibold text-white/80">
-            Interactive demo app embeds here
-          </p>
-          <p className="max-w-sm font-jakarta text-[12px] text-white/45">
-            {/* TODO: set DEMO_APP_URL in lib/constants.js to the hosted demo
-                app URL and this panel becomes a live embed. */}
-            Set the demo app URL in lib/constants.js to drop in the live embed.
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function Demo() {
   const [tab, setTab] = useState('inbound');
   const tabs = [
@@ -325,55 +277,34 @@ export default function Demo() {
 
       <div className="relative z-10 mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <div className="content-wrap">
-          <div className="mb-10 text-center lg:mb-12">
+          <div className="mb-10 text-center lg:mb-14">
             <Reveal>
               <div
                 className="sub-title mx-auto mb-6"
                 style={{ color: '#E5C463', background: 'rgba(201,162,39,0.12)' }}
               >
                 <span className="sub-title-dot" />
-                Hear It Live
+                Live Demo
               </div>
             </Reveal>
             <h2
               className="mx-auto max-w-3xl font-jakarta text-4xl font-extrabold text-white sm:text-5xl lg:text-[3.5rem]"
               style={{ lineHeight: '1.1', letterSpacing: '-0.04em' }}
             >
-              <SplitText text="Don't take our word." mode="char" />{' '}
-              <span className="gradient-text-flow">Call it yourself.</span>
+              <SplitText text="This is what your" mode="char" />{' '}
+              <span className="gradient-text-flow">callers hear</span>
             </h2>
+            <Reveal delay={0.1}>
+              <p
+                className="mx-auto mt-5 max-w-2xl font-jakarta text-lg text-white/65"
+                style={{ letterSpacing: '-0.02em' }}
+              >
+                Natural, conversational, and impossible to tell from a trained
+                CSR. Toggle between a fresh inbound call and an outbound
+                database reactivation call.
+              </p>
+            </Reveal>
           </div>
-
-          {/* call-now card */}
-          <Reveal variants={{ hidden: { opacity: 0, y: 36, scale: 0.96 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } } }}>
-            <div
-              className="relative mx-auto mb-10 max-w-3xl overflow-hidden rounded-[24px] p-7 text-center sm:p-9"
-              style={{
-                background: 'radial-gradient(120% 130% at 50% 0%, #E5C463 0%, #C9A227 45%, #8C6F1E 100%)',
-                boxShadow: '0 30px 60px rgba(201,162,39,0.3)',
-              }}
-            >
-              <div className="relative">
-                <div className="mb-1 font-jakarta text-[12px] font-bold uppercase tracking-[0.16em] text-white/80">
-                  Call the demo line now
-                </div>
-                <a
-                  href={DEMO_PHONE_TEL}
-                  onClick={() => track('Contact', { location: 'demo_phone' })}
-                  className="group inline-flex items-center gap-3 font-jakarta text-4xl font-extrabold text-white transition-transform hover:scale-[1.03] sm:text-5xl"
-                  style={{ letterSpacing: '-0.04em' }}
-                >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 sm:h-14 sm:w-14">
-                    <Phone size={24} />
-                  </span>
-                  {DEMO_PHONE}
-                </a>
-                <p className="mt-3 font-jakarta text-sm font-medium text-white/85">
-                  Talk to the AI receptionist yourself. Available 24/7, no signup.
-                </p>
-              </div>
-            </div>
-          </Reveal>
 
           {/* tabs */}
           <Reveal className="mb-7 flex justify-center">
@@ -426,30 +357,12 @@ export default function Demo() {
             </AnimatePresence>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-5 flex items-center justify-center gap-2 text-center">
+          <Reveal delay={0.1} className="mt-6 flex items-center justify-center gap-2 text-center">
             <Phone size={15} className="text-ds-primary-light" />
             <span className="font-jakarta text-sm text-white/55">
               On any call that needs a person, the AI warm-transfers to your
               team, live.
             </span>
-          </Reveal>
-
-          {/* embed + dashboard link */}
-          <Reveal variants={{ hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } } }} className="mx-auto mt-12 max-w-3xl">
-            <EmbedBlock />
-            <div className="mt-5 text-center">
-              <MagneticButton
-                href={DASHBOARD_URL}
-                className="btn-light h-12 px-7 text-sm"
-                strength={0.3}
-                onClick={() => track('Contact', { location: 'demo_dashboard' })}
-              >
-                <span className="flex items-center gap-2">
-                  See the dashboard
-                  <ArrowRight size={16} />
-                </span>
-              </MagneticButton>
-            </div>
           </Reveal>
         </div>
       </div>

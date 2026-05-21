@@ -7,8 +7,6 @@
   client components below.
 
   ⚠️  BEFORE LAUNCH
-    • Set NEXT_PUBLIC_FB_PIXEL_ID + NEXT_PUBLIC_GA4_ID in Vercel (see .env.example)
-    • Swap demo phone / demo app / dashboard / calendar — lib/constants.js
     • /public/og-image.png (1200x630) — referenced in app/layout.js
     • Wire the real scheduler embed in components/FinalCTA.jsx
     • Add real case studies in components/Results.jsx

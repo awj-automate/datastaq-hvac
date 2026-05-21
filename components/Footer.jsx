@@ -2,8 +2,7 @@
 
 import Reveal from '@/components/Reveal';
 import MagneticButton from '@/components/MagneticButton';
-import { BOOK_URL, DEMO_PHONE, DEMO_PHONE_TEL } from '@/lib/constants';
-import { track } from '@/lib/tracking';
+import { BOOK_URL } from '@/lib/constants';
 
 const navCols = [
   {
@@ -53,7 +52,6 @@ export default function Footer() {
               href={BOOK_URL}
               className="btn-dark relative z-10 h-14 px-10 text-base"
               cursorText="Book now →"
-              onClick={() => track('Lead', { location: 'footer_cta' })}
             >
               Book a Call
             </MagneticButton>
@@ -120,18 +118,7 @@ export default function Footer() {
               >
                 See if your call volume qualifies for the 60-day guarantee.
               </p>
-              <a
-                href={DEMO_PHONE_TEL}
-                onClick={() => track('Contact', { location: 'footer_phone' })}
-                className="mb-4 block font-jakarta text-sm font-bold text-ds-heading transition-colors hover:text-ds-primary-dark"
-              >
-                Hear it live: {DEMO_PHONE}
-              </a>
-              <a
-                href={BOOK_URL}
-                onClick={() => track('Lead', { location: 'footer_contact' })}
-                className="btn-accent h-11 text-sm"
-              >
+              <a href={BOOK_URL} className="btn-accent h-11 text-sm">
                 Book a Call
               </a>
             </div>

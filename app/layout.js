@@ -1,7 +1,6 @@
 import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
-import Analytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/constants';
 
 /* Face is DM Sans; the CSS variable keeps the `--font-jakarta`
@@ -60,7 +59,6 @@ export default function RootLayout({ children }) {
     <html lang="en" className={dmSans.variable}>
       <body className="font-jakarta antialiased">
         <SmoothScroll>{children}</SmoothScroll>
-        <Analytics />
       </body>
     </html>
   );

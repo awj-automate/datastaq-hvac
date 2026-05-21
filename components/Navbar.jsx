@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MagneticButton from '@/components/MagneticButton';
 import { BOOK_URL } from '@/lib/constants';
-import { track } from '@/lib/tracking';
 
 const navLinks = [
   { label: 'The Problem', href: '#problem' },
@@ -72,11 +71,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:block">
-            <MagneticButton
-              href={BOOK_URL}
-              className="btn-dark h-11 text-sm"
-              onClick={() => track('Lead', { location: 'navbar' })}
-            >
+            <MagneticButton href={BOOK_URL} className="btn-dark h-11 text-sm">
               Book a Call
             </MagneticButton>
           </div>
@@ -122,10 +117,7 @@ export default function Navbar() {
               ))}
               <a
                 href={BOOK_URL}
-                onClick={() => {
-                  setOpen(false);
-                  track('Lead', { location: 'navbar_mobile' });
-                }}
+                onClick={() => setOpen(false)}
                 className="btn-dark mt-2 w-full justify-center text-sm"
               >
                 Book a Call

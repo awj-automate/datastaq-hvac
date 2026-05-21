@@ -6,9 +6,8 @@ import SplitText from '@/components/SplitText';
 import MagneticButton from '@/components/MagneticButton';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import ParticleField from '@/components/ParticleField';
-import { Headset, Snowflake, Calendar, Bolt, Check, Phone, Repeat } from '@/components/Icons';
-import { BOOK_URL, DEMO_APP_URL, DEMO_PHONE, DEMO_PHONE_TEL } from '@/lib/constants';
-import { track } from '@/lib/tracking';
+import { Headset, Snowflake, Calendar, Bolt, Check, Repeat } from '@/components/Icons';
+import { BOOK_URL } from '@/lib/constants';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -347,47 +346,23 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: EASE, delay: 1.42 }}
-                className="mb-5 flex flex-wrap gap-4"
+                className="mb-8 flex flex-wrap gap-4"
               >
                 <MagneticButton
                   href={BOOK_URL}
                   className="btn-accent h-14 px-9 text-base"
                   strength={0.5}
-                  onClick={() => track('Lead', { location: 'hero' })}
                 >
                   <span className="relative z-10">Book a Call</span>
                 </MagneticButton>
                 <MagneticButton
-                  href={DEMO_APP_URL}
+                  href="#demo"
                   className="btn-light h-14 px-8 text-base"
                   strength={0.35}
-                  onClick={() => track('Contact', { location: 'hero_demo' })}
                 >
                   Hear the Demo
                 </MagneticButton>
               </motion.div>
-
-              {/* visible demo phone line */}
-              <motion.a
-                href={DEMO_PHONE_TEL}
-                onClick={() => track('Contact', { location: 'hero_phone' })}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: EASE, delay: 1.52 }}
-                className="mb-7 inline-flex items-center gap-3 rounded-full border border-ds-primary/30 bg-white/70 px-5 py-3 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-ds-primary hover:shadow-[0_10px_28px_rgba(201,162,39,0.22)]"
-              >
-                <span className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-ds-primary text-white">
-                  <span className="pulse-ring absolute inset-0 rounded-full bg-ds-primary/40" />
-                  <Phone size={17} />
-                </span>
-                <span className="font-jakarta text-sm text-ds-muted" style={{ letterSpacing: '-0.01em' }}>
-                  Call{' '}
-                  <strong className="font-extrabold text-ds-heading">
-                    {DEMO_PHONE}
-                  </strong>{' '}
-                  right now to hear it live
-                </span>
-              </motion.a>
 
               {/* trust row */}
               <motion.div
