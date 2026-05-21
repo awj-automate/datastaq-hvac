@@ -284,7 +284,7 @@ export default function Hero() {
                 className="mb-6 font-jakarta text-[2.6rem] font-extrabold text-ds-heading sm:text-6xl xl:text-[4.2rem]"
                 style={{ lineHeight: '1.04', letterSpacing: '-0.045em' }}
               >
-                <SplitText text="20 qualified HVAC appointments" mode="char" />{' '}
+                <SplitText text="20 qualified appointments" mode="char" />{' '}
                 <SplitText text="in 60 days" mode="word" delay={0.55} />{' '}
                 <motion.span
                   initial={{ opacity: 0, y: 24, filter: 'blur(10px)' }}
